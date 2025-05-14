@@ -2,12 +2,12 @@ import time
 
 import pytest
 import allure
-from pages.saucedemo.login_page import LoginPage
-from pages.saucedemo.home_page import HomePage
+from pages.saucedemo.saucedemo_login_page import SaucedemoLoginPage
+from pages.saucedemo.saucedemo_home_page import SaucedemoHomePage
 
 
 @allure.feature("Login")
-@allure.story("User Authentication")
+# @allure.story("User Authentication")
 class TestLogin:
     """Test suite for login functionality"""
 
@@ -16,17 +16,18 @@ class TestLogin:
     @allure.severity(allure.severity_level.CRITICAL)
     def test_valid_login(self, driver, config):
         """Test login with valid credentials"""
+
         # Navigate to home page
-        home_page = HomePage(driver)
+        home_page = SaucedemoHomePage(driver)
         home_page.open_url(config.BASE_URL)
 
         # Go to login page
-        home_page.go_to_login()
-        time.sleep(10);
+        # home_page.go_to_login()
 
         # Perform login
-        # login_page = LoginPage(driver)
-        # login_page.login("testuser", "password123")
+        login_page = SaucedemoLoginPage(driver)
+        login_page.login("standard_user", "secret_sauce")
+        time.sleep(10);
 
         # Verify successful login
         # assert "Welcome" in home_page.get_welcome_message()

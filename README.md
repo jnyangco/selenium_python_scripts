@@ -33,7 +33,7 @@ A comprehensive test automation framework using Selenium WebDriver, pytest, and 
 pytest
 
 # Run specific test file
-pytest tests/test_sample/test_login.py
+pytest tests/test_sample/test_saucedemo_login.py
 
 # Run tests with specific marker
 pytest -m smoke
@@ -56,11 +56,14 @@ Set environment variables or modify `config/config.py`:
 ### Generating Allure Report
 
 ```bash
-# Generate report
+# 1.1 Generate report
 allure generate reports/allure-results -o reports/allure-report
 
-# Open report
+# 1.2 Open report
 allure open reports/allure-report
+
+# 2.1 Generate and open report
+allure serve reports/allure-result
 ```
 
 ## Adding New Tests
@@ -82,13 +85,14 @@ allure open reports/allure-report
 
 ```python
 import pytest
-from pages.sample_pages.login_page import LoginPage
+from pages.saucedemo.saucedemo_login_page import SaucedemoLoginPage
+
 
 class TestLogin:
     def test_valid_login(self, driver, config):
-        login_page = LoginPage(driver)
+        login_page = SaucedemoLoginPage(driver)
         login_page.open_url(config.BASE_URL)
         login_page.login("user", "password")
-        assert login_page.is_logged_in()
+        assert SaucedemoLoginPage.is_logged_in()
 ```
 ```

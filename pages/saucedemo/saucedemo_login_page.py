@@ -3,13 +3,13 @@ from base.base_page import BasePage
 import allure
 
 
-class LoginPage(BasePage):
+class SaucedemoLoginPage(BasePage):
     """Sample login page for demonstration"""
 
     # Locators
-    USERNAME_INPUT = (By.ID, "username")
-    PASSWORD_INPUT = (By.ID, "password")
-    LOGIN_BUTTON = (By.ID, "login-button")
+    USERNAME_INPUT = (By.XPATH, "//input[@id='user-name']")
+    PASSWORD_INPUT = (By.XPATH, "//input[@id='password']")
+    LOGIN_BUTTON = (By.XPATH, "//input[@id='login-button']")
     ERROR_MESSAGE = (By.CLASS_NAME, "error-message")
 
     @allure.step("Login with username: {username} and password: {password}")
