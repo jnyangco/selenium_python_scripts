@@ -1,0 +1,1 @@
+rm -rf reports/allure-report reports/allure-results
