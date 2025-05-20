@@ -6,7 +6,7 @@ from base.base_page import BasePage
 import allure
 
 
-class SaucedemoHomePage(BasePage):
+class HomePageSaucedemo(BasePage):
     """Sample home page for demonstration"""
 
     # Locators

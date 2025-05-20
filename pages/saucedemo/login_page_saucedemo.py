@@ -3,7 +3,7 @@ from base.base_page import BasePage
 import allure
 
 
-class SaucedemoLoginPage(BasePage):
+class LoginPageSaucedemo(BasePage):
     """Sample login page for demonstration"""
 
     # Locators

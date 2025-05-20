@@ -9,8 +9,11 @@ class TestConfig:
     BROWSER: str = os.getenv("BROWSER", "chrome")
     HEADLESS: bool = os.getenv("HEADLESS", "False").lower() == "true"
 
-    # Test settings
-    BASE_URL: str = os.getenv("BASE_URL", "https://www.saucedemo.com/")
+    # Base Url settings
+    BASE_URL_SAUCEDEMO: str = os.getenv("BASE_URL", "https://www.saucedemo.com/")
+    BASE_URL_ORANGEHRM: str = os.getenv("BASE_URL", "https://opensource-demo.orangehrmlive.com")
+
+    # Wait settings
     IMPLICIT_WAIT: int = int(os.getenv("IMPLICIT_WAIT", "10"))
     EXPLICIT_WAIT: int = int(os.getenv("EXPLICIT_WAIT", "10"))
 

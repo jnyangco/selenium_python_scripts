@@ -33,7 +33,7 @@ A comprehensive test automation framework using Selenium WebDriver, pytest, and 
 pytest
 
 # Run specific test file
-pytest tests/test_sample/test_saucedemo_login.py
+pytest tests/test_sample/test_login_saucedemo.py
 
 # Run tests with specific marker
 pytest -m smoke
@@ -85,14 +85,14 @@ allure serve reports/allure-result
 
 ```python
 import pytest
-from pages.saucedemo.saucedemo_login_page import SaucedemoLoginPage
+from pages.saucedemo.login_page_saucedemo import LoginPageSaucedemo
 
 
 class TestLogin:
     def test_valid_login(self, driver, config):
-        login_page = SaucedemoLoginPage(driver)
+        login_page = LoginPageSaucedemo(driver)
         login_page.open_url(config.BASE_URL)
         login_page.login("user", "password")
-        assert SaucedemoLoginPage.is_logged_in()
+        assert LoginPageSaucedemo.is_logged_in()
 ```
 ```
