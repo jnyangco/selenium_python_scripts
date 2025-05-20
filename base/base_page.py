@@ -24,7 +24,7 @@ class BasePage:
         self.driver.get(url)
 
     @allure.step("Finding element: {locator}")
-    def find_element(self, locator, timeout=10):
+    def find_web_element(self, locator, timeout=10):
         """Find element with explicit wait"""
         try:
             element = WebDriverWait(self.driver, timeout).until(
@@ -38,7 +38,7 @@ class BasePage:
             raise
 
     @allure.step("Finding elements: {locator}")
-    def find_elements(self, locator, timeout=10):
+    def find_web_elements(self, locator, timeout=10):
         """Find multiple elements with explicit wait"""
         try:
             elements = WebDriverWait(self.driver, timeout).until(
@@ -52,16 +52,16 @@ class BasePage:
             return []
 
     @allure.step("Clicking element: {locator}")
-    def click(self, locator):
+    def click_element(self, locator):
         """Click an element"""
         element = self.wait.until(EC.element_to_be_clickable(locator))
         self.logger.info(f"Clicking element: {locator}")
         element.click()
 
     @allure.step("Typing text: {text} into element: {locator}")
-    def send_keys(self, locator, text):
-        """Send keys to an element"""
-        element = self.find_element(locator)
+    def enter_text(self, locator, text):
+        """Type text into an element after clearing it"""
+        element = self.find_web_element(locator)
         element.clear()
         self.logger.info(f"Typing: {text} into element: {locator}")
         element.send_keys(text)
@@ -69,16 +69,16 @@ class BasePage:
     @allure.step("Getting text from element: {locator}")
     def get_text(self, locator):
         """Get text from an element"""
-        element = self.find_element(locator)
+        element = self.find_web_element(locator)
         text = element.text
         self.logger.info(f"Got text: {text} from element: {locator}")
         return text
 
     @allure.step("Checking if element is displayed: {locator}")
-    def is_displayed(self, locator):
+    def is_element_displayed(self, locator):
         """Check if element is displayed"""
         try:
-            element = self.find_element(locator)
+            element = self.find_web_element(locator)
             is_displayed = element.is_displayed()
             self.logger.info(f"Element {locator} is {'displayed' if is_displayed else 'not displayed'}")
             return is_displayed
@@ -103,19 +103,19 @@ class BasePage:
     @allure.step("Hovering over element: {locator}")
     def hover(self, locator):
         """Hover over an element"""
-        element = self.find_element(locator)
+        element = self.find_web_element(locator)
         ActionChains(self.driver).move_to_element(element).perform()
         self.logger.info(f"Hovered over element: {locator}")
 
     @allure.step("Scrolling to element: {locator}")
     def scroll_to_element(self, locator):
         """Scroll to element"""
-        element = self.find_element(locator)
+        element = self.find_web_element(locator)
         self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
         self.logger.info(f"Scrolled to element: {locator}")
 
     @allure.step("Getting page title")
-    def get_title(self):
+    def get_page_title(self):
         """Get page title"""
         title = self.driver.title
         self.logger.info(f"Page title: {title}")

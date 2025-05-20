@@ -15,14 +15,14 @@ class SaucedemoLoginPage(BasePage):
     @allure.step("Login with username: {username} and password: {password}")
     def login(self, username, password):
         """Perform login action"""
-        self.send_keys(self.USERNAME_INPUT, username)
-        self.send_keys(self.PASSWORD_INPUT, password)
-        self.click(self.LOGIN_BUTTON)
+        self.enter_text(self.USERNAME_INPUT, username)
+        self.enter_text(self.PASSWORD_INPUT, password)
+        self.click_element(self.LOGIN_BUTTON)
 
     @allure.step("Check if error message is displayed")
     def is_error_displayed(self):
         """Check if error message is displayed"""
-        return self.is_displayed(self.ERROR_MESSAGE)
+        return self.is_element_displayed(self.ERROR_MESSAGE)
 
     @allure.step("Get error message text")
     def get_error_message(self):

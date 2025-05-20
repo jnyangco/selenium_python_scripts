@@ -20,13 +20,13 @@ class SaucedemoHomePage(BasePage):
     @allure.step("Navigate to login page")
     def go_to_login(self):
         """Click on login link"""
-        self.click(self.LOGIN_LINK)
+        self.click_element(self.LOGIN_LINK)
 
     @allure.step("Search for: {query}")
     def search(self, query):
         """Perform search"""
-        self.send_keys(self.SEARCH_BOX, query)
-        self.click(self.SEARCH_BUTTON)
+        self.enter_text(self.SEARCH_BOX, query)
+        self.click_element(self.SEARCH_BUTTON)
 
     @allure.step("Get welcome message")
     def get_welcome_message(self):
