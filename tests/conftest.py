@@ -1,23 +1,32 @@
 import pytest
 import allure
-from base.driver_factory import DriverFactory
+import os
+from base.remote_driver_factory import RemoteDriverFactory
 from config.config import TestConfig
 from utils.logger import setup_logger
 from utils.screenshot_utils import ScreenshotUtils
 
-
 # Setup logger
 logger = setup_logger()
 
+
 @pytest.fixture(scope="function")
 def driver():
-    """Create and yield WebDriver instance"""
+    """Create and yield WebDriver instance - local or remote based on configuration"""
     config = TestConfig()
 
-    # Create driver
-    driver = DriverFactory.create_driver(
+    # Check if we should use Selenium Grid
+    use_grid = os.getenv("USE_GRID", "False").lower() == "true"
+    hub_url = os.getenv("SELENIUM_HUB_URL", "http://localhost:4444/wd/hub")
+
+    logger.info(f"Setting up driver with USE_GRID={use_grid}, HUB_URL={hub_url}")
+
+    # Create driver using the factory
+    driver = RemoteDriverFactory.create_driver(
         browser_name=config.BROWSER,
-        headless=config.HEADLESS
+        headless=config.HEADLESS,
+        use_grid=use_grid,
+        hub_url=hub_url
     )
 
     # Set implicit wait

@@ -9,6 +9,10 @@ class TestConfig:
     BROWSER: str = os.getenv("BROWSER", "chrome")
     HEADLESS: bool = os.getenv("HEADLESS", "False").lower() == "true"
 
+    # Grid settings
+    USE_GRID: bool = os.getenv("USE_GRID", "False").lower() == "true"
+    SELENIUM_HUB_URL: str = os.getenv("SELENIUM_HUB_URL", "http://localhost:4444/wd/hub")
+
     # Base Url settings
     BASE_URL_SAUCEDEMO: str = os.getenv("BASE_URL_SAUCEDEMO", "https://www.saucedemo.com/")
     BASE_URL_ORANGEHRM: str = os.getenv("BASE_URL_ORANGEHRM", "https://opensource-demo.orangehrmlive.com")
@@ -20,6 +24,9 @@ class TestConfig:
     # Report settings
     SCREENSHOTS_DIR: str = os.getenv("SCREENSHOTS_DIR", "reports/screenshots")
     ALLURE_RESULTS_DIR: str = os.getenv("ALLURE_RESULTS_DIR", "reports/allure-results")
+
+    # Parallel execution settings
+    PARALLEL_WORKERS: int = int(os.getenv("PARALLEL_WORKERS", "2"))
 
     # Logging settings
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")

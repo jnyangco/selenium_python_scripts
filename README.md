@@ -1,12 +1,6 @@
-# selenium_python_scripts
+# Selenium Python Scripts Framework
 
-# test commit: branch = develop
-# test commit: branch = feature/docker_support
-
-```markdown
-# Selenium Page Object Model Framework
-
-A comprehensive test automation framework using Selenium WebDriver, pytest, and Allure reporting.
+A comprehensive test automation framework using Selenium WebDriver, pytest, and Allure reporting with Docker and Jenkins integration.
 
 ## Features
 
@@ -17,6 +11,8 @@ A comprehensive test automation framework using Selenium WebDriver, pytest, and 
 - Logging support
 - Screenshot capture on failure
 - Parallel test execution support
+- Docker and Selenium Grid support
+- Jenkins integration
 - Easy to extend for different websites
 
 ## Installation
@@ -27,9 +23,9 @@ A comprehensive test automation framework using Selenium WebDriver, pytest, and 
    pip install -r requirements.txt
    ```
 
-## Usage
+## Local Usage
 
-### Running Tests
+### Running Tests Locally
 
 ```bash
 # Run all tests
@@ -56,17 +52,69 @@ Set environment variables or modify `config/config.py`:
 - `HEADLESS`: Run in headless mode (true/false)
 - `BASE_URL`: Base URL for tests
 
-### Generating Allure Report
+## Docker and Selenium Grid
+
+### Running Tests with Docker
+
+The framework supports running tests in Docker containers with Selenium Grid for distributed test execution.
+
+#### Prerequisites
+
+- Docker and Docker Compose installed
+
+#### Start Selenium Grid
 
 ```bash
-# 1.1 Generate report
+docker-compose up -d selenium-hub chrome firefox edge
+```
+
+#### Run Tests with Docker
+
+```bash
+# Run all tests with default settings
+./run_docker_tests.sh
+
+# Run with specific browser and in headless mode
+./run_docker_tests.sh -b firefox -h
+
+# Run specific tests with markers in parallel
+./run_docker_tests.sh -b chrome -p 4 -t tests/saucedemo -m smoke
+```
+
+#### Stop Selenium Grid
+
+```bash
+docker-compose down
+```
+
+## Jenkins Integration
+
+This framework includes a Jenkinsfile for CI/CD integration. To set up in Jenkins:
+
+1. Create a new Pipeline job in Jenkins
+2. Configure it to use the Jenkinsfile from this repository
+3. Set up necessary plugins:
+   - Docker Pipeline
+   - Allure Jenkins Plugin
+
+Jenkins pipeline parameters:
+- `BROWSER`: Browser to run tests (chrome, firefox, edge)
+- `HEADLESS`: Run in headless mode (true/false)
+- `TEST_PATH`: Path to tests
+- `MARKERS`: Test markers (e.g., smoke)
+- `PARALLEL_WORKERS`: Number of parallel workers
+
+## Generating Allure Report
+
+```bash
+# Generate report
 allure generate reports/allure-results -o reports/allure-report
 
-# 1.2 Open report
+# Open report
 allure open reports/allure-report
 
-# 2.1 Generate and open report
-allure serve reports/allure-result
+# Generate and open report
+allure serve reports/allure-results
 ```
 
 ## Adding New Tests
@@ -83,19 +131,7 @@ allure serve reports/allure-result
 - `config/`: Configuration files
 - `utils/`: Utility functions
 - `reports/`: Test reports and screenshots
-
-## Example Test
-
-```python
-import pytest
-from pages.saucedemo.login_page_saucedemo import LoginPageSaucedemo
-
-
-class TestLoginSaucedemo:
-    def test_valid_login(self, driver, config):
-        login_page = LoginPageSaucedemo(driver)
-        login_page.open_url(config.BASE_URL)
-        login_page.login("user", "password")
-        # assert LoginPageSaucedemo.is_logged_in()
-```
-```
+- `docker-compose.yml`: Docker Compose configuration for Selenium Grid
+- `Dockerfile`: Docker configuration for test runner
+- `Jenkinsfile`: Jenkins pipeline configuration
+- `run_docker_tests.sh`: Script to run tests in Docker
