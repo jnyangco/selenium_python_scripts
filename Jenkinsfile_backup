@@ -6,17 +6,6 @@ pipeline {
         }
     }
 
-    // Define a shared function at the top level
-    environment {
-        // Use a Groovy function to define setup commands
-        DOCKER_SETUP_COMMANDS = '''
-            export PATH=$PATH:/usr/local/bin
-            echo "PATH=$PATH"
-            which docker
-            docker --version
-        '''
-    }
-
     parameters {
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'edge'], description: 'Browser to run tests')
         booleanParam(name: 'HEADLESS', defaultValue: true, description: 'Run in headless mode')
@@ -28,7 +17,6 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
-                sh '${env.DOCKER_SETUP_COMMANDS'
                 sh 'apt-get update && apt-get install -y docker.io docker-compose'
                 sh 'pip install --no-cache-dir -r requirements.txt'
             }
@@ -36,7 +24,6 @@ pipeline {
 
         stage('Start Selenium Grid') {
             steps {
-                sh '${env.DOCKER_SETUP_COMMANDS'
                 sh 'docker-compose up -d selenium-hub chrome firefox edge'
                 sh 'sleep 10' // Wait for Grid to be ready
             }
@@ -79,7 +66,6 @@ pipeline {
 
     post {
         always {
-            sh '${env.DOCKER_SETUP_COMMANDS'
             sh 'docker-compose down'
             cleanWs()
         }
